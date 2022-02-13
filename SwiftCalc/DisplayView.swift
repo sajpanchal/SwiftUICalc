@@ -28,10 +28,21 @@
 
 import SwiftUI
 
+extension Color {
+    static var random: Color {
+        return Color(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1))
+    }
+   
+}
 struct DisplayView: View {
   @Binding var display: String
 
   var body: some View {
+      if #available(iOS 15.0, *) {
+          let _ = Self._printChanges()
+      } else {
+          // Fallback on earlier versions
+      }
     HStack {
       if display.isEmpty {
         Text("0")
@@ -62,6 +73,7 @@ struct DisplayView: View {
           )
       }
     }
+    .background(Color.random)
   }
 }
 
