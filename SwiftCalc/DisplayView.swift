@@ -35,12 +35,12 @@ struct DisplayView: View {
     HStack {
       if display.isEmpty {
         Text("0")
-          // Add display identifier
-          .padding(.horizontal, 5)
-          .frame(
-            maxWidth: .infinity,
-            alignment: .trailing
-          )
+              .accessibility(identifier: "display")
+              .padding(.horizontal, 5)
+              .frame(
+                maxWidth: .infinity,
+                alignment: .trailing
+              )
           .overlay(
             RoundedRectangle(
               cornerRadius: 8)
@@ -49,12 +49,12 @@ struct DisplayView: View {
           )
       } else {
         Text(display)
-          // Add display identifier
-          .padding(.horizontal, 5)
-          .frame(
-            maxWidth: .infinity,
-            alignment: .trailing
-          )
+            .accessibility(identifier: "display")
+            .padding(.horizontal, 5)
+            .frame(
+                maxWidth: .infinity,
+                alignment: .trailing
+            )
           .overlay(
             RoundedRectangle(cornerRadius: 8)
               .stroke(lineWidth: 2)

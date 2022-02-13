@@ -43,14 +43,63 @@ class SwiftCalcUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testPressMemoryPlusAtAppStartShowZeroInDisplay() throws {
+      
         let app = XCUIApplication()
         app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let memoryButton = app.buttons["M+"]
+        memoryButton.tap()
+        
+        let display = app.staticTexts["display"]
+        let displayText = display.label
+        XCTAssert(displayText == "0")
+    
     }
+    
+    func testAddingTwoDigits() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let firstButton = app.buttons["8"]
+        firstButton.tap()
+        
+        let addButton = app.buttons["+"]
+        addButton.tap()
+        
+        let secondButton = app.buttons["5"]
+        secondButton.tap()
+        
+        let sumButton = app.buttons["="]
+        sumButton.tap()
+        
+        let display = app.staticTexts["display"]
+        
+        let displayText = display.label
+        
+        XCTAssert(displayText == "13.0")
+    }
+#if !targetEnvironment(macCatalyst)
+    func testSwipeToClearMemory() throws {
+        let app = XCUIApplication()
+        
+        app.launch()
+        
+        let numberButton = app.buttons["5"]
+        numberButton.tap()
+        
+        let memoryButton = app.buttons["M+"]
+        memoryButton.tap()
+        
+        let display = app.staticTexts["memoryDisplay"]
+        
+        XCTAssert(display.exists)
+        
+        display.swipeLeft()
+        
+        XCTAssertFalse(display.exists)
+    }
+#endif
+    
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
