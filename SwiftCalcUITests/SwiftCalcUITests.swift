@@ -78,7 +78,7 @@ class SwiftCalcUITests: XCTestCase {
         
         XCTAssert(displayText == "13.0")
     }
-#if !targetEnvironment(macCatalyst)
+
     func testSwipeToClearMemory() throws {
         let app = XCUIApplication()
         
@@ -93,12 +93,15 @@ class SwiftCalcUITests: XCTestCase {
         let display = app.staticTexts["memoryDisplay"]
         
         XCTAssert(display.exists)
-        
+#if !targetEnvironment(macCatalyst)
         display.swipeLeft()
+#else
+                display.doubleTap()
+#endif
         
         XCTAssertFalse(display.exists)
     }
-#endif
+
     
 
     func testLaunchPerformance() throws {

@@ -37,6 +37,7 @@ struct MemoryView: View {
           .onEnded { _ in
               memory = 0.0
           }
+      
     HStack {
       Spacer()
       Text("\(memory)")
@@ -46,12 +47,17 @@ struct MemoryView: View {
           width: geometry.size.width * 0.85,
           alignment: .trailing
         )
+
         .overlay(
           RoundedRectangle(cornerRadius: 8)
             .stroke(lineWidth: 2)
             .foregroundColor(Color.gray)
         )
+    #if !targetEnvironment(macCatalyst)
         .gesture(memorySwipe)
+        #else
+        .onTapGesture(count: 2, perform: {memory = 0.0})
+        #endif
       Text("M")
     }.padding(.bottom).padding(.horizontal, 5)
   }
